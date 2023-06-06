@@ -1,8 +1,3 @@
-/*
- * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
- * See LICENSE in the project root for license information.
- */
-
 /* global global, Office, self, window */
 
 import { Configuration, OpenAIApi } from "openai";
@@ -11,10 +6,7 @@ Office.onReady(() => {
   // If needed, Office.js is ready to be called
 });
 
-/**
- * Generate a business mail when the add-in command is executed.
- * @param event
- */
+
 function action(event: Office.AddinCommands.Event) {
   var setting = Office.context.roamingSettings.get('openApiToken');
   if (!setting) {
@@ -149,11 +141,10 @@ function getGlobal() {
 function onNewMessageComposeHandler() {
   var setting = Office.context.roamingSettings.get('openApiToken');
   if (!setting) {
-    Office.context.ui.displayDialogAsync('https://localhost:3000/tokenpopup.html', { height: 30, width: 20 },
+    Office.context.ui.displayDialogAsync('https://localhost:3000/taskpane.html', { height: 30, width: 20 },
       function (asyncResult) {
         const dialog = asyncResult.value;
-        dialog.addEventHandler(Office.EventType.DialogMessageReceived, (args) => {
-          Office.context.roamingSettings.set('openApiToken', args);
+        dialog.addEventHandler(Office.EventType.DialogMessageReceived, () => {
           dialog.close();
         });
       }

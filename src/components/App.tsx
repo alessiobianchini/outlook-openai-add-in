@@ -14,19 +14,36 @@ export interface AppState {
 }
 
 export default class App extends React.Component<AppProps, AppState> {
-    token: string;
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            token: Office.context.roamingSettings.get('openApiToken')
+        };
+
+        this.saveSettings = this.saveSettings.bind(this);
     }
 
     saveSettings() {
-        Office.context.roamingSettings.set('openApiToken', this.token);
+        Office.context.roamingSettings.set('openApiToken', (this.state as any).token);
+        this.save();
+        var itoken = Office.context.roamingSettings.get('openApiToken');
+        var tt = itoken;
     }
 
+    save() {
+        Office.context.roamingSettings.saveAsync(function (result) {
+            if (result.status !== Office.AsyncResultStatus.Succeeded) {
+                console.error(`Action failed with message ${result.error.message}`);
+            } else {
+                console.log(`Settings saved with status: ${result.status}`);
+            }
+        });
+    }
 
     handleChange = e => {
-        this.token = e.target.value;
+        this.setState({token: e.target.value})
     };
 
     render() {
@@ -36,7 +53,7 @@ export default class App extends React.Component<AppProps, AppState> {
             return (
                 <Progress
                     title={title}
-                    logo={require("./../../../assets/logo-filled.png")}
+                    logo={require("./../../assets/logo-filled.png")}
                     message="Please sideload your addin to see app body."
                 />
             );
@@ -53,7 +70,7 @@ export default class App extends React.Component<AppProps, AppState> {
                         OpenAI token configuration
                     </p>
                     <p>
-                        <Input value={this.token} onChange={this.handleChange} />
+                        <Input value={(this.state as any).token} onChange={this.handleChange} />
                     </p>
                     <p>
                         <Button
