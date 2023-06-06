@@ -48,7 +48,7 @@ function generateBusinessMail(): Promise<any> {
     try {
       Office.context.mailbox.item.getSelectedDataAsync(Office.CoercionType.Text, async function (asyncResult) {
         const configuration = new Configuration({
-          apiKey: "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",
+          apiKey: Office.context.roamingSettings.get('openApiToken'),
         });
         const openai = new OpenAIApi(configuration);
         const response = await openai.createChatCompletion({
@@ -79,7 +79,7 @@ function translateToEnglish(): Promise<any> {
     try {
       Office.context.mailbox.item.getSelectedDataAsync(Office.CoercionType.Text, async function (asyncResult) {
         const configuration = new Configuration({
-          apiKey: "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",
+          apiKey: Office.context.roamingSettings.get('openApiToken'),
         });
         const openai = new OpenAIApi(configuration);
         const response = await openai.createChatCompletion({
@@ -110,7 +110,7 @@ function correctFormat(): Promise<any> {
     try {
       Office.context.mailbox.item.getSelectedDataAsync(Office.CoercionType.Text, async function (asyncResult) {
         const configuration = new Configuration({
-          apiKey: "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",
+          apiKey: Office.context.roamingSettings.get('openApiToken'),
         });
         const openai = new OpenAIApi(configuration);
         const response = await openai.createChatCompletion({

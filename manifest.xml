@@ -23,7 +23,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://localhost:3000/translate.html"/>
+        <SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -92,19 +92,19 @@
                     <FunctionName>action</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="SetToken">
-                  <Label resid="SetToken.Label"/>
+                <Control xsi:type="Button" id="Taskpane">
+                  <Label resid="Taskpane.Label"/>
                   <Supertip>
-                    <Title resid="SetToken.Label"/>
-                    <Description resid="SetToken.Tooltip"/>
+                    <Title resid="Taskpane.Label"/>
+                    <Description resid="Taskpane.Tooltip"/>
                   </Supertip>
                   <Icon>
                     <bt:Image size="16" resid="Icon.16x16"/>
                     <bt:Image size="32" resid="Icon.32x32"/>
                     <bt:Image size="80" resid="Icon.80x80"/>
                   </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>onNewMessageComposeHandler</FunctionName>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="Taskpane.Url"/>
                   </Action>
                 </Control>
               </Group>
@@ -121,6 +121,7 @@
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabelCompose" DefaultValue="AI Assistant"/>
@@ -128,14 +129,13 @@
         <bt:String id="BusinessMail.Label" DefaultValue="Generate business mail"/>
         <bt:String id="Tanslate.Label" DefaultValue="Translate to english"/>
         <bt:String id="CorrectFormat.Label" DefaultValue="Correct spelling and grammar"/>
-        <bt:String id="SetToken.Label" DefaultValue="Set OpenAI token"/>
+        <bt:String id="Taskpane.Label" DefaultValue="Set OpenAI token"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane to configure the Open AI token"/>
         <bt:String id="BusinessMail.Tooltip" DefaultValue="Generate business mail starting from selected text."/>
         <bt:String id="Tanslate.Tooltip" DefaultValue="Translate the selected text to english."/>
         <bt:String id="CorrectFormat.Tooltip" DefaultValue="Correct spelling and grammar of the selected text."/>
-        <bt:String id="SetToken.Tooltip" DefaultValue="Set user personal OpenAI token."/>
+        <bt:String id="Taskpane.Tooltip" DefaultValue="Opens a pane to configure the Open AI token"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
