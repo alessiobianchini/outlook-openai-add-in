@@ -2,6 +2,7 @@
 import { Button, Input } from "@fluentui/react-components";
 import * as React from "react";
 import Progress from "./Progress";
+import { Label, MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/react";
 
 /* global require */
 
@@ -10,8 +11,34 @@ export interface AppProps {
     isOfficeInitialized: boolean;
 }
 
+
+export interface MessageProps {
+    title: string;
+}
+
 export interface AppState {
 }
+
+const SuccessExample = (props: MessageProps) => (
+    <MessageBar
+        messageBarType={MessageBarType.success}
+        isMultiline={false}
+        dismissButtonAriaLabel="Close"
+    >
+        {props.title}
+    </MessageBar>
+);
+
+
+const ErrorExample = (props: MessageProps) => (
+    <MessageBar
+        messageBarType={MessageBarType.error}
+        isMultiline={false}
+        dismissButtonAriaLabel="Close"
+    >
+        {props.title}
+    </MessageBar>
+);
 
 export default class App extends React.Component<AppProps, AppState> {
 
@@ -19,31 +46,34 @@ export default class App extends React.Component<AppProps, AppState> {
         super(props);
 
         this.state = {
-            token: Office.context.roamingSettings.get('openApiToken')
+            token: Office.context.roamingSettings.get('openApiToken'),
+            saved: null,
+            error: null
         };
 
         this.saveSettings = this.saveSettings.bind(this);
+        this.save = this.save.bind(this);
     }
 
     saveSettings() {
         Office.context.roamingSettings.set('openApiToken', (this.state as any).token);
-        this.save();
-        var itoken = Office.context.roamingSettings.get('openApiToken');
-        var tt = itoken;
+        this.save(this);
     }
 
-    save() {
+    save(app: any) {
         Office.context.roamingSettings.saveAsync(function (result) {
             if (result.status !== Office.AsyncResultStatus.Succeeded) {
+                app.setState({ saved: null, error: `Save failed with message ${result.error.message}` });
                 console.error(`Action failed with message ${result.error.message}`);
             } else {
                 console.log(`Settings saved with status: ${result.status}`);
+                app.setState({ saved: 'Open AI token saved!', error: null });
             }
         });
     }
 
     handleChange = e => {
-        this.setState({token: e.target.value})
+        this.setState({ token: e.target.value })
     };
 
     render() {
@@ -62,23 +92,27 @@ export default class App extends React.Component<AppProps, AppState> {
         return (
             <div className="ms-welcome">
                 <main className="ms-welcome__main">
-                    <h2 className="ms-font-xl ms-fontWeight-semilight ms-fontColor-neutralPrimary ms-u-slideUpIn20">
-                        AI Assistant
-                    </h2>
+                    <Label>
+                        <h2>
+                            AI Assistant
+                        </h2>
+                    </Label>
 
-                    <p className="ms-font-l ms-fontWeight-semilight ms-fontColor-neutralPrimary ms-u-slideUpIn20">
-                        OpenAI token configuration
+                    <p >
+                        <Label>OpenAI token configuration</Label>
                     </p>
+                    <TextField value={(this.state as any).token} onChange={this.handleChange} />
                     <p>
-                        <Input value={(this.state as any).token} onChange={this.handleChange} />
-                    </p>
-                    <p>
-                        <Button
-                            appearance="primary"
+                        <PrimaryButton
+                            className='btn'
                             onClick={this.saveSettings}
                         >
                             Save token
-                        </Button>
+                        </PrimaryButton>
+                    </p>
+                    <p>
+                        {!!((this.state as any).saved) && <SuccessExample title={(this.state as any).saved} />}
+                        {!!((this.state as any).error) && <ErrorExample title={(this.state as any).error} />}
                     </p>
                 </main>
             </div>
