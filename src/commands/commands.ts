@@ -138,22 +138,7 @@ function getGlobal() {
         : undefined;
 }
 
-function onNewMessageComposeHandler() {
-  var setting = Office.context.roamingSettings.get('openApiToken');
-  if (!setting) {
-    Office.context.ui.displayDialogAsync('https://localhost:3000/taskpane.html', { height: 30, width: 20 },
-      function (asyncResult) {
-        const dialog = asyncResult.value;
-        dialog.addEventHandler(Office.EventType.DialogMessageReceived, () => {
-          dialog.close();
-        });
-      }
-    );
-  }
-}
-
 const g = getGlobal() as any;
 
 // The add-in command functions need to be available in global scope
 g.action = action;
-g.onNewMessageComposeHandler = onNewMessageComposeHandler;
