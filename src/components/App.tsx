@@ -52,22 +52,17 @@ export default class App extends React.Component<AppProps, AppState> {
         };
 
         this.saveSettings = this.saveSettings.bind(this);
-        this.save = this.save.bind(this);
     }
 
     saveSettings() {
         Office.context.roamingSettings.set('openApiToken', (this.state as any).token);
-        this.save(this);
-    }
-
-    save(app: any) {
-        Office.context.roamingSettings.saveAsync(function (result) {
+        Office.context.roamingSettings.saveAsync((result) => {
             if (result.status !== Office.AsyncResultStatus.Succeeded) {
-                app.setState({ saved: null, error: `Save failed with message ${result.error.message}` });
+                this.setState({ saved: null, error: `Save failed with message ${result.error.message}` });
                 console.error(`Action failed with message ${result.error.message}`);
             } else {
                 console.log(`Settings saved with status: ${result.status}`);
-                app.setState({ saved: 'Open AI token saved!', error: null });
+                this.setState({ saved: 'Open AI token saved!', error: null });
             }
         });
     }
