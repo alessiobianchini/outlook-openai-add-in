@@ -1,8 +1,7 @@
 /* eslint-disable no-undef */
-import { Button, Input } from "@fluentui/react-components";
+import { Label, MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/react";
 import * as React from "react";
 import Progress from "./Progress";
-import { Label, MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/react";
 
 /* global require */
 
@@ -108,6 +107,11 @@ export default class App extends React.Component<AppProps, AppState> {
                     <p>
                         {!!((this.state as any).saved) && <SuccessExample title={(this.state as any).saved} />}
                         {!!((this.state as any).error) && <ErrorExample title={(this.state as any).error} />}
+                    </p>
+                    <p >
+                        <a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener noreferrer">
+                            Get your OpenAI API key
+                        </a>
                     </p>
                 </main>
             </div>

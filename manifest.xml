@@ -5,7 +5,7 @@
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Outlook AI Assistant"/>
-  <Description DefaultValue="A tool to generate Business mails from a simple sentence."/>
+  <Description DefaultValue="A tool for generating business emails, translations, and for correcting spelling and grammar."/>
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-128.png"/>
   <SupportUrl DefaultValue="https://www.contoso.com/help"/>
