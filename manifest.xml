@@ -54,9 +54,9 @@
                     <Description resid="BusinessMail.Tooltip"/>
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
+                    <bt:Image size="16" resid="Mail.16x16"/>
+                    <bt:Image size="32" resid="Mail.32x32"/>
+                    <bt:Image size="80" resid="Mail.80x80"/>
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>action</FunctionName>
@@ -69,9 +69,9 @@
                     <Description resid="Tanslate.Tooltip"/>
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
+                    <bt:Image size="16" resid="English.16x16"/>
+                    <bt:Image size="32" resid="English.32x32"/>
+                    <bt:Image size="80" resid="English.150x150"/>
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>action</FunctionName>
@@ -84,9 +84,9 @@
                     <Description resid="CorrectFormat.Tooltip"/>
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
+                    <bt:Image size="16" resid="Grammar.16x16"/>
+                    <bt:Image size="32" resid="Grammar.32x32"/>
+                    <bt:Image size="80" resid="Grammar.150x150"/>
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>action</FunctionName>
@@ -99,9 +99,9 @@
                     <Description resid="Taskpane.Tooltip"/>
                   </Supertip>
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
+                    <bt:Image size="16" resid="Settings.16x16"/>
+                    <bt:Image size="32" resid="Settings.32x32"/>
+                    <bt:Image size="80" resid="Settings.70x70"/>
                   </Icon>
                   <Action xsi:type="ShowTaskpane">
                     <SourceLocation resid="Taskpane.Url"/>
@@ -118,6 +118,18 @@
         <bt:Image id="Icon.16x16" DefaultValue="https://localhost:3000/assets/icon-16.png"/>
         <bt:Image id="Icon.32x32" DefaultValue="https://localhost:3000/assets/icon-32.png"/>
         <bt:Image id="Icon.80x80" DefaultValue="https://localhost:3000/assets/icon-80.png"/>
+        <bt:Image id="English.16x16" DefaultValue="https://localhost:3000/assets/english-16.png"/>
+        <bt:Image id="English.32x32" DefaultValue="https://localhost:3000/assets/english-32.png"/>
+        <bt:Image id="English.150x150" DefaultValue="https://localhost:3000/assets/english-150.png"/>
+        <bt:Image id="Settings.16x16" DefaultValue="https://localhost:3000/assets/settings-16.png"/>
+        <bt:Image id="Settings.32x32" DefaultValue="https://localhost:3000/assets/settings-32.png"/>
+        <bt:Image id="Settings.70x70" DefaultValue="https://localhost:3000/assets/settings-70.png"/>
+        <bt:Image id="Grammar.16x16" DefaultValue="https://localhost:3000/assets/grammar-16.png"/>
+        <bt:Image id="Grammar.32x32" DefaultValue="https://localhost:3000/assets/grammar-32.png"/>
+        <bt:Image id="Grammar.70x70" DefaultValue="https://localhost:3000/assets/grammar-70.png"/>
+        <bt:Image id="Mail.16x16" DefaultValue="https://localhost:3000/assets/mail-16.png"/>
+        <bt:Image id="Mail.32x32" DefaultValue="https://localhost:3000/assets/mail-32.png"/>
+        <bt:Image id="Mail.70x70" DefaultValue="https://localhost:3000/assets/mail-70.png"/>
       </bt:Images>
       <bt:Urls>
         <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
