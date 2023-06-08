@@ -58,7 +58,10 @@ function generateBusinessMail(): Promise<any> {
           ],
         });
 
-        resolve(response.data.choices[0].message.content);
+        let res = response.data.choices[0].message.content;
+        res = res?.replace(/(^"|"$)/g, '');
+
+        resolve(res);
       });
     } catch (error) {
       reject(error);
@@ -89,7 +92,10 @@ function translateToEnglish(): Promise<any> {
           ],
         });
 
-        resolve(response.data.choices[0].message.content);
+        let res = response.data.choices[0].message.content;
+        res = res?.replace(/(^"|"$)/g, '');
+
+        resolve(res);
       });
     } catch (error) {
       reject(error);
@@ -120,7 +126,10 @@ function correctFormat(): Promise<any> {
           ],
         });
 
-        resolve(response.data.choices[0].message.content);
+        let res = response.data.choices[0].message.content;
+        res = res?.replace(/(^"|"$)/g, '');
+
+        resolve(res);
       });
     } catch (error) {
       reject(error);
