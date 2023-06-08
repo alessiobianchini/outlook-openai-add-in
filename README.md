@@ -14,7 +14,7 @@ Run `npm install` and `npm start` for a dev server with an example. Test it in y
 
 ## Usage
 
-![image](https://github.com/alessiobianchini/outlook-openai-add-in/assets/33493281/d1753e18-8323-41ee-bc09-5ea908fd4803)
+![image](https://github.com/alessiobianchini/outlook-openai-add-in/assets/33493281/8fc578f7-b9bb-42ae-8edd-5efcaf7e6746)
 
 
 - "Generate business mail" -> Generates a business email from the selected text in the original language.
