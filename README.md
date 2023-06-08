@@ -26,3 +26,9 @@ Run `npm install` and `npm start` for a dev server with an example. Test it in y
 - "Set OpenAI token" -> Setup your personal OpenAI api token:
 
   ![image](https://github.com/alessiobianchini/outlook-openai-add-in/assets/33493281/74e55ebc-a4b9-4fc3-aabe-55ed61790c16)
+
+## Deployment
+
+- Add your urlProd to the `webpack.config.js` file.
+- Run the `npm run build` command and publish the compiled output.
+- Import the Add-in from the url yoursite.com/manifest.xml.
