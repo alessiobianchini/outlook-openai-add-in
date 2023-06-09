@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
-import { Label, MessageBar, MessageBarType, PrimaryButton, TextField } from "@fluentui/react";
+import { Label, MessageBar, MessageBarType, PrimaryButton, Spinner, SpinnerSize, TextField } from "@fluentui/react";
 import * as React from "react";
-import Progress from "./Progress";
 
 export interface AppProps {
     title: string;
@@ -69,40 +68,52 @@ export default class App extends React.Component<AppProps, AppState> {
     };
 
     render() {
-        const { isOfficeInitialized, title } = this.props;
+        const { isOfficeInitialized } = this.props;
+
+        let bodyBackgroundColor = 'inherit';
+        let bodyForegroundColor = 'inherit';
+        let controlBackgroundColor = 'inherit';
+        let controlForegroundColor = 'inherit';
+
+        if (Office.context && Office.context.officeTheme) {
+            bodyBackgroundColor = Office.context.officeTheme.bodyBackgroundColor;
+            bodyForegroundColor = Office.context.officeTheme.bodyForegroundColor;
+            controlBackgroundColor = Office.context.officeTheme.controlBackgroundColor;
+            controlForegroundColor = Office.context.officeTheme.controlForegroundColor;
+            if (document.getElementsByTagName('body')) {
+                document.getElementsByTagName('body')[0].style['background-color'] = bodyBackgroundColor;
+                document.getElementsByTagName('body')[0].style['color'] = bodyForegroundColor;
+            }
+        }
+
         const mainStyle = {
             display: 'flex',
             'flex-direction': 'column',
             'align-items': 'center'
         }
+
         if (!isOfficeInitialized) {
-            return (
-                <Progress
-                    title={title}
-                    logo={require("./../../assets/logo-filled.png")}
-                    message="Please sideload your addin to see app body."
-                />
+            return (<Spinner size={SpinnerSize.large} label={'Loading...'} />
             );
         }
 
         return (
             <main style={mainStyle}>
-                <Label>
-                    <h2>
-                        AI Assistant
-                    </h2>
-                </Label>
-
                 <p >
-                    <Label>OpenAI token configuration</Label>
+                    <Label style={{ color: 'inherit', backgroundColor: 'inherit' }}>OpenAI API token configuration</Label>
                 </p>
-                <TextField value={(this.state as any).token} onChange={this.handleChange} />
+                <TextField
+                    style={{ color: 'inherit', backgroundColor: 'inherit !important' }}
+                    value={(this.state as any).token}
+                    onChange={this.handleChange}
+                    inputClassName="text-field"
+                />
                 <p>
                     <PrimaryButton
                         className='btn'
                         onClick={this.saveSettings}
                     >
-                        Save token
+                        Save API token
                     </PrimaryButton>
                 </p>
                 <p>
@@ -110,9 +121,11 @@ export default class App extends React.Component<AppProps, AppState> {
                     {!!((this.state as any).error) && <ErrorExample title={(this.state as any).error} />}
                 </p>
                 <p >
-                    <a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener noreferrer">
-                        Get your OpenAI API key
-                    </a>
+                    <Label style={{ color: 'inherit', backgroundColor: 'inherit' }}>
+                        <a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener noreferrer">
+                            Get your OpenAI API key
+                        </a>
+                    </Label>
                 </p>
             </main>
         );
