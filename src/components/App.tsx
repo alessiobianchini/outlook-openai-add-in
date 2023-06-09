@@ -3,8 +3,6 @@ import { Label, MessageBar, MessageBarType, PrimaryButton, TextField } from "@fl
 import * as React from "react";
 import Progress from "./Progress";
 
-/* global require */
-
 export interface AppProps {
     title: string;
     isOfficeInitialized: boolean;
@@ -72,7 +70,11 @@ export default class App extends React.Component<AppProps, AppState> {
 
     render() {
         const { isOfficeInitialized, title } = this.props;
-
+        const mainStyle = {
+            display: 'flex',
+            'flex-direction': 'column',
+            'align-items': 'center'
+        }
         if (!isOfficeInitialized) {
             return (
                 <Progress
@@ -84,37 +86,35 @@ export default class App extends React.Component<AppProps, AppState> {
         }
 
         return (
-            <div className="ms-welcome">
-                <main className="ms-welcome__main">
-                    <Label>
-                        <h2>
-                            AI Assistant
-                        </h2>
-                    </Label>
+            <main style={mainStyle}>
+                <Label>
+                    <h2>
+                        AI Assistant
+                    </h2>
+                </Label>
 
-                    <p >
-                        <Label>OpenAI token configuration</Label>
-                    </p>
-                    <TextField value={(this.state as any).token} onChange={this.handleChange} />
-                    <p>
-                        <PrimaryButton
-                            className='btn'
-                            onClick={this.saveSettings}
-                        >
-                            Save token
-                        </PrimaryButton>
-                    </p>
-                    <p>
-                        {!!((this.state as any).saved) && <SuccessExample title={(this.state as any).saved} />}
-                        {!!((this.state as any).error) && <ErrorExample title={(this.state as any).error} />}
-                    </p>
-                    <p >
-                        <a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener noreferrer">
-                            Get your OpenAI API key
-                        </a>
-                    </p>
-                </main>
-            </div>
+                <p >
+                    <Label>OpenAI token configuration</Label>
+                </p>
+                <TextField value={(this.state as any).token} onChange={this.handleChange} />
+                <p>
+                    <PrimaryButton
+                        className='btn'
+                        onClick={this.saveSettings}
+                    >
+                        Save token
+                    </PrimaryButton>
+                </p>
+                <p>
+                    {!!((this.state as any).saved) && <SuccessExample title={(this.state as any).saved} />}
+                    {!!((this.state as any).error) && <ErrorExample title={(this.state as any).error} />}
+                </p>
+                <p >
+                    <a href="https://platform.openai.com/account/api-keys" target="_blank" rel="noopener noreferrer">
+                        Get your OpenAI API key
+                    </a>
+                </p>
+            </main>
         );
     }
 }

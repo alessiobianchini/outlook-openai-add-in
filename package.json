@@ -1,6 +1,6 @@
 {
   "name": "doit-ai-office-addin",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "license": "MIT",
   "config": {
     "app_to_debug": "outlook",

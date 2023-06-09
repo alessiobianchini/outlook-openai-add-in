@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" xsi:type="MailApp">
-  <Id>2d1bb0b1-b678-4984-8ecc-3ccac5e1f5d6</Id>
-  <Version>1.0.0.3</Version>
+  <Id>8d59c4b4-eded-4873-939a-880cf49d97e6</Id>
+  <Version>1.2.0.6</Version>
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Outlook AI Assistant"/>
@@ -47,7 +47,7 @@
             <OfficeTab id="TabDefault">
               <Group id="AI.msgComposeGroup">
                 <Label resid="GroupLabelCompose"/>
-                <Control xsi:type="Button" id="BusinessMail">
+                <Control xsi:type="Button" id="GenerateBusinessMail">
                   <Label resid="BusinessMail.Label"/>
                   <Supertip>
                     <Title resid="BusinessMail.Label"/>
@@ -56,13 +56,13 @@
                   <Icon>
                     <bt:Image size="16" resid="Mail.16x16"/>
                     <bt:Image size="32" resid="Mail.32x32"/>
-                    <bt:Image size="80" resid="Mail.80x80"/>
+                    <bt:Image size="80" resid="Mail.70x70"/>
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>action</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="Tanslate">
+                <Control xsi:type="Button" id="TranslateToEnglish">
                   <Label resid="Tanslate.Label"/>
                   <Supertip>
                     <Title resid="Tanslate.Label"/>
@@ -77,7 +77,7 @@
                     <FunctionName>action</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="CorrectFormat">
+                <Control xsi:type="Button" id="CorrectGrammar">
                   <Label resid="CorrectFormat.Label"/>
                   <Supertip>
                     <Title resid="CorrectFormat.Label"/>
@@ -86,7 +86,7 @@
                   <Icon>
                     <bt:Image size="16" resid="Grammar.16x16"/>
                     <bt:Image size="32" resid="Grammar.32x32"/>
-                    <bt:Image size="80" resid="Grammar.150x150"/>
+                    <bt:Image size="80" resid="Grammar.70x70"/>
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
                     <FunctionName>action</FunctionName>

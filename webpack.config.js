@@ -93,6 +93,9 @@ module.exports = async (env, options) => {
       new webpack.ProvidePlugin({
         Promise: ["es6-promise", "Promise"],
       }),
+      new HtmlWebpackPlugin({
+        favicon: "./src/favicon.ico"
+    })
     ],
     devServer: {
       hot: true,

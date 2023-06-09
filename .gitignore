@@ -33,3 +33,5 @@ obj
 # Styles Generated Code
 *.scss.ts
 manifest_online.xml
+
+.vscode

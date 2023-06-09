@@ -14,19 +14,19 @@ function action(event: Office.AddinCommands.Event) {
     event.completed();
   }
   else {
-    if (event.source.id == 'BusinessMail') {
+    if (event.source.id == 'GenerateBusinessMail') {
       generateBusinessMail().then(function (selectedText) {
         Office.context.mailbox.item.setSelectedDataAsync(selectedText, { coercionType: Office.CoercionType.Text });
         event.completed();
       });
     }
-    else if (event.source.id == 'Tanslate') {
+    else if (event.source.id == 'TranslateToEnglish') {
       translateToEnglish().then(function (selectedText) {
         Office.context.mailbox.item.setSelectedDataAsync(selectedText, { coercionType: Office.CoercionType.Text });
         event.completed();
       });
     }
-    else if (event.source.id == 'CorrectFormat') {
+    else if (event.source.id == 'CorrectGrammar') {
       correctFormat().then(function (selectedText) {
         Office.context.mailbox.item.setSelectedDataAsync(selectedText, { coercionType: Office.CoercionType.Text });
         event.completed();
@@ -48,8 +48,7 @@ function generateBusinessMail(): Promise<any> {
           messages: [
             {
               role: "system",
-              content:
-                "You are a helpful assistant that can help users to better manage emails. The following prompt contains the whole mail thread. ",
+              content: "You are a helpful assistant.",
             },
             {
               role: "user",
@@ -82,8 +81,7 @@ function translateToEnglish(): Promise<any> {
           messages: [
             {
               role: "system",
-              content:
-                "You are a helpful assistant that can help users to better manage emails. The following prompt contains the whole mail thread. ",
+              content: "You are a helpful assistant.",
             },
             {
               role: "user",
@@ -116,12 +114,11 @@ function correctFormat(): Promise<any> {
           messages: [
             {
               role: "system",
-              content:
-                "You are a helpful assistant that can help users to better manage emails. The following prompt contains the whole mail thread. ",
+              content: "You are a helpful assistant.",
             },
             {
               role: "user",
-              content: "Correct spelling and grammar: " + asyncResult.value?.data,
+              content: "Correct spelling and grammar using it's original language: " + asyncResult.value?.data,
             },
           ],
         });
@@ -149,5 +146,4 @@ function getGlobal() {
 
 const g = getGlobal() as any;
 
-// The add-in command functions need to be available in global scope
 g.action = action;
