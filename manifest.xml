@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" xsi:type="MailApp">
   <Id>8d59c4b4-eded-4873-939a-880cf49d97e6</Id>
-  <Version>1.2.0.6</Version>
-  <ProviderName>Contoso</ProviderName>
+  <Version>1.2.0.11</Version>
+  <ProviderName>DOIT s.r.l.</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="Outlook AI Assistant"/>
+  <DisplayName DefaultValue="DOIT Outlook AI Assistant"/>
   <Description DefaultValue="A tool for generating business emails, translations, and for correcting spelling and grammar."/>
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-128.png"/>
-  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
+  <SupportUrl DefaultValue="https://www.doit.it/help"/>
   <AppDomains>
-    <AppDomain>https://www.contoso.com</AppDomain>
+    <AppDomain>https://www.doit.it</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Mailbox"/>
