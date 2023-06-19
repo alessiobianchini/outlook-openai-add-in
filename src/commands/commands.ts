@@ -14,124 +14,55 @@ function action(event: Office.AddinCommands.Event) {
     event.completed();
   }
   else {
-    if (event.source.id == 'GenerateBusinessMail') {
-      generateBusinessMail().then(function (selectedText) {
-        Office.context.mailbox.item.setSelectedDataAsync(selectedText, { coercionType: Office.CoercionType.Text });
+    try {
+      Office.context.mailbox.item.getSelectedDataAsync(Office.CoercionType.Text, async function (asyncResult) {
+        const configuration = new Configuration({
+          apiKey: Office.context.roamingSettings.get('openApiToken'),
+        });
+        const openai = new OpenAIApi(configuration);
+        var content = "";
+        var data = asyncResult.value?.data;
+        const endsWithNewline = data.endsWith("\n");
+
+        if (event.source.id == 'GenerateBusinessMail') {
+          content = `Could you generate a business email based on the following text, preserving its original language? ${data}`;
+        }
+        else if (event.source.id == 'TranslateToEnglish') {
+          content = "Can you translate to english this mail: " + data;
+        }
+        else if (event.source.id == 'CorrectGrammar') {
+          content = "Can you correct spelling and grammar of the followng text, preserving it's original language: " + data;
+        }
+        const response = await openai.createChatCompletion({
+          model: "gpt-3.5-turbo",
+          messages: [
+            {
+              role: "system",
+              content: "You are a helpful assistant.",
+            },
+            {
+              role: "user",
+              content: content,
+            },
+          ],
+        });
+
+        let res = response.data.choices[0].message.content;
+        res = res?.replace(/(^"|"$)/g, '');
+        const resEndsWithNewline = res.endsWith("\n");
+
+        if (endsWithNewline && !resEndsWithNewline) {
+          res += '\n';
+        }
+        
+        Office.context.mailbox.item.setSelectedDataAsync(res, { coercionType: Office.CoercionType.Text });
         event.completed();
       });
-    }
-    else if (event.source.id == 'TranslateToEnglish') {
-      translateToEnglish().then(function (selectedText) {
-        Office.context.mailbox.item.setSelectedDataAsync(selectedText, { coercionType: Office.CoercionType.Text });
-        event.completed();
-      });
-    }
-    else if (event.source.id == 'CorrectGrammar') {
-      correctFormat().then(function (selectedText) {
-        Office.context.mailbox.item.setSelectedDataAsync(selectedText, { coercionType: Office.CoercionType.Text });
-        event.completed();
-      });
+    } catch (error) {
+      Office.context.mailbox.item.setSelectedDataAsync(`Failed to run ${event.source.id} action`, { coercionType: Office.CoercionType.Text });
+      event.completed();
     }
   }
-}
-
-function generateBusinessMail(): Promise<any> {
-  return new Office.Promise(function (resolve, reject) {
-    try {
-      Office.context.mailbox.item.getSelectedDataAsync(Office.CoercionType.Text, async function (asyncResult) {
-        const configuration = new Configuration({
-          apiKey: Office.context.roamingSettings.get('openApiToken'),
-        });
-        const openai = new OpenAIApi(configuration);
-        const response = await openai.createChatCompletion({
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are a helpful assistant.",
-            },
-            {
-              role: "user",
-              content: `Generate business mail from this text using it's original language: ${asyncResult.value?.data}`,
-            },
-          ],
-        });
-
-        let res = response.data.choices[0].message.content;
-        res = res?.replace(/(^"|"$)/g, '');
-
-        resolve(res);
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
-function translateToEnglish(): Promise<any> {
-  return new Office.Promise(function (resolve, reject) {
-    try {
-      Office.context.mailbox.item.getSelectedDataAsync(Office.CoercionType.Text, async function (asyncResult) {
-        const configuration = new Configuration({
-          apiKey: Office.context.roamingSettings.get('openApiToken'),
-        });
-        const openai = new OpenAIApi(configuration);
-        const response = await openai.createChatCompletion({
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are a helpful assistant.",
-            },
-            {
-              role: "user",
-              content: "Translate to english this mail: " + asyncResult.value?.data,
-            },
-          ],
-        });
-
-        let res = response.data.choices[0].message.content;
-        res = res?.replace(/(^"|"$)/g, '');
-
-        resolve(res);
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
-}
-
-function correctFormat(): Promise<any> {
-  return new Office.Promise(function (resolve, reject) {
-    try {
-      Office.context.mailbox.item.getSelectedDataAsync(Office.CoercionType.Text, async function (asyncResult) {
-        const configuration = new Configuration({
-          apiKey: Office.context.roamingSettings.get('openApiToken'),
-        });
-        const openai = new OpenAIApi(configuration);
-        const response = await openai.createChatCompletion({
-          model: "gpt-3.5-turbo",
-          messages: [
-            {
-              role: "system",
-              content: "You are a helpful assistant.",
-            },
-            {
-              role: "user",
-              content: "Correct spelling and grammar using it's original language: " + asyncResult.value?.data,
-            },
-          ],
-        });
-
-        let res = response.data.choices[0].message.content;
-        res = res?.replace(/(^"|"$)/g, '');
-
-        resolve(res);
-      });
-    } catch (error) {
-      reject(error);
-    }
-  });
 }
 
 function getGlobal() {
