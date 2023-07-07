@@ -10,8 +10,9 @@ Office.onReady(() => {
 function action(event: Office.AddinCommands.Event) {
   var setting = Office.context.roamingSettings.get('openApiToken');
   if (!setting) {
-    Office.context.mailbox.item.setSelectedDataAsync("OpenAI token not configured \r\n", { coercionType: Office.CoercionType.Text });
-    event.completed();
+    Office.context.mailbox.item.setSelectedDataAsync("OpenAI token not configured \r\n", { coercionType: Office.CoercionType.Text }), async function () {
+      event.completed();
+    }
   }
   else {
     try {
@@ -55,12 +56,14 @@ function action(event: Office.AddinCommands.Event) {
           res += '\r';
         }
 
-        Office.context.mailbox.item.setSelectedDataAsync(res, { coercionType: Office.CoercionType.Text });
-        event.completed();
+        Office.context.mailbox.item.setSelectedDataAsync(res, { coercionType: Office.CoercionType.Text }), async function () {
+          event.completed();
+        };
       });
     } catch (error) {
-      Office.context.mailbox.item.setSelectedDataAsync(`Failed to run ${event.source.id} action \r\n`, { coercionType: Office.CoercionType.Text });
-      event.completed();
+      Office.context.mailbox.item.setSelectedDataAsync(`Failed to run ${event.source.id} action \r\n`, { coercionType: Office.CoercionType.Text }), async function () {
+        event.completed();
+      }
     }
   }
 }
