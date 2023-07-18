@@ -10,13 +10,42 @@ Office.onReady(() => {
 function action(event: Office.AddinCommands.Event) {
   var setting = Office.context.roamingSettings.get('openApiToken');
   if (!setting) {
-    Office.context.mailbox.item.setSelectedDataAsync("OpenAI token not configured \r\n", { coercionType: Office.CoercionType.Text }), async function () {
-      event.completed();
+    Office.context.mailbox.item.setSelectedDataAsync("OpenAI token not configured \r\n", { coercionType: Office.CoercionType.Text }), (asyncResult) => {
+      if (asyncResult.status == Office.AsyncResultStatus.Failed) {
+        console.log("Error during insertion", asyncResult.error.message);
+      }
     }
   }
   else {
     try {
-      Office.context.mailbox.item.getSelectedDataAsync(Office.CoercionType.Text, async function (asyncResult) {
+      executeAction(event.source.id).then((res) => {
+        event.completed();
+        Office.context.document.setSelectedDataAsync(res, { coercionType: Office.CoercionType.Text }), (asyncResult) => {
+          if (asyncResult.status == Office.AsyncResultStatus.Failed) {
+            console.log("Error during insertion", asyncResult.error.message);
+          }
+          event.completed();
+        }
+      })
+    }
+    catch (error) {
+      Office.context.mailbox.item.setSelectedDataAsync(`Failed to run ${event.source.id} action \r\n`, { coercionType: Office.CoercionType.Text }), (asyncResult) => {
+        if (asyncResult.status == Office.AsyncResultStatus.Failed) {
+          console.log("Error during insertion", asyncResult.error.message);
+        }
+        event.completed();
+      }
+    }
+    finally {
+      event.completed();
+    }
+  }
+}
+
+function executeAction(id): Promise<any> {
+  return new Office.Promise((resolve, reject) => {
+    try {
+      Office.context.mailbox.item.getSelectedDataAsync(Office.CoercionType.Text, async (asyncResult) => {
         const configuration = new Configuration({
           apiKey: Office.context.roamingSettings.get('openApiToken'),
         });
@@ -25,17 +54,17 @@ function action(event: Office.AddinCommands.Event) {
         var data = asyncResult.value?.data;
         const endsWithNewline = data.endsWith("\r") || data.endsWith("\n") || data.endsWith("\r\n");
 
-        if (event.source.id == 'GenerateBusinessMail') {
+        if (id == 'GenerateBusinessMail') {
           content = `Could you generate a business email based on the following text, preserving its original language? ${data}`;
         }
-        else if (event.source.id == 'TranslateToEnglish') {
+        else if (id == 'TranslateToEnglish') {
           content = "Can you translate to english the followng text, preserving the layout? " + data;
         }
-        else if (event.source.id == 'CorrectGrammar') {
+        else if (id == 'CorrectGrammar') {
           content = "Can you correct spelling and grammar of the followng text, preserving it's original language? " + data;
         }
         const response = await openai.createChatCompletion({
-          model: "gpt-3.5-turbo",
+          model: "gpt-4",
           messages: [
             {
               role: "system",
@@ -56,17 +85,14 @@ function action(event: Office.AddinCommands.Event) {
           res += '\r';
         }
 
-        Office.context.mailbox.item.setSelectedDataAsync(res, { coercionType: Office.CoercionType.Text }), async function () {
-          event.completed();
-        };
+        resolve(res);
       });
     } catch (error) {
-      Office.context.mailbox.item.setSelectedDataAsync(`Failed to run ${event.source.id} action \r\n`, { coercionType: Office.CoercionType.Text }), async function () {
-        event.completed();
-      }
+      reject(error);
     }
-  }
+  });
 }
+
 
 function getGlobal() {
   return typeof self !== "undefined"
