@@ -14,8 +14,8 @@ function action(event: Office.AddinCommands.Event) {
       if (asyncResult.status == Office.AsyncResultStatus.Failed) {
         console.error("Error during insertion", asyncResult.error.message);
       }
-      event.completed();
     }
+    event.completed();
   }
   else {
     try {
@@ -24,8 +24,8 @@ function action(event: Office.AddinCommands.Event) {
           if (asyncResult.status == Office.AsyncResultStatus.Failed) {
             console.error("Error during insertion", asyncResult.error.message);
           }
-          event.completed();
         }
+        event.completed();
       })
     }
     catch (error) {
@@ -33,8 +33,8 @@ function action(event: Office.AddinCommands.Event) {
         if (asyncResult.status == Office.AsyncResultStatus.Failed) {
           console.error("Error during insertion", asyncResult.error.message);
         }
-        event.completed();
       }
+      event.completed();
     }
   }
 }
