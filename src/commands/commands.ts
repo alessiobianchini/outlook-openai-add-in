@@ -12,17 +12,17 @@ function action(event: Office.AddinCommands.Event) {
   if (!setting) {
     Office.context.mailbox.item.setSelectedDataAsync("OpenAI token not configured \r\n", { coercionType: Office.CoercionType.Text }), (asyncResult) => {
       if (asyncResult.status == Office.AsyncResultStatus.Failed) {
-        console.log("Error during insertion", asyncResult.error.message);
+        console.error("Error during insertion", asyncResult.error.message);
       }
+      event.completed();
     }
   }
   else {
     try {
       executeAction(event.source.id).then((res) => {
-        event.completed();
-        Office.context.document.setSelectedDataAsync(res, { coercionType: Office.CoercionType.Text }), (asyncResult) => {
+        Office.context.mailbox.item.setSelectedDataAsync(res, { coercionType: Office.CoercionType.Text }), (asyncResult) => {
           if (asyncResult.status == Office.AsyncResultStatus.Failed) {
-            console.log("Error during insertion", asyncResult.error.message);
+            console.error("Error during insertion", asyncResult.error.message);
           }
           event.completed();
         }
@@ -31,13 +31,10 @@ function action(event: Office.AddinCommands.Event) {
     catch (error) {
       Office.context.mailbox.item.setSelectedDataAsync(`Failed to run ${event.source.id} action \r\n`, { coercionType: Office.CoercionType.Text }), (asyncResult) => {
         if (asyncResult.status == Office.AsyncResultStatus.Failed) {
-          console.log("Error during insertion", asyncResult.error.message);
+          console.error("Error during insertion", asyncResult.error.message);
         }
         event.completed();
       }
-    }
-    finally {
-      event.completed();
     }
   }
 }
@@ -64,7 +61,7 @@ function executeAction(id): Promise<any> {
           content = "Can you correct spelling and grammar of the followng text, preserving it's original language? " + data;
         }
         const response = await openai.createChatCompletion({
-          model: "gpt-4",
+          model: "gpt-3.5-turbo",
           messages: [
             {
               role: "system",
